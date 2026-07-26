@@ -2,6 +2,7 @@ allowBuilds:
   esbuild: true
 minimumReleaseAgeExclude:
   - vitest-directory-snapshot@0.7.1
+  - yargs@18.1.0
 peerDependencyRules:
   allowedVersions:
     "vitest-directory-snapshot>vitest": "4"
