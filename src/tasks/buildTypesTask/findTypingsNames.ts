@@ -34,12 +34,7 @@ function collectAllFilesInDir(sourceDir: string, ext: string) {
   return ret;
 }
 
-export function findTypingsNames(
-  { ts }: TS,
-  entrypoint: string,
-  sourceDir: string,
-  ext: string,
-) {
+export function findTypingsNames({ ts }: TS, entrypoint: string, sourceDir: string, ext: string) {
   const host = createCompilerHostWithVirtualSource(ts, sourceDir);
   const program = ts.createProgram({
     rootNames: collectAllFilesInDir(sourceDir, ext),
@@ -51,16 +46,11 @@ export function findTypingsNames(
   const processedFiles = new Set<string>();
   const filesQueue = [relative(sourceDir, entrypoint)];
 
-  function processModuleSpecifier(
-    moduleSpecifier: ts.StringLiteral,
-    currentFile: string,
-  ) {
+  function processModuleSpecifier(moduleSpecifier: ts.StringLiteral, currentFile: string) {
     const moduleName = moduleSpecifier.text;
     if (moduleName.startsWith(".")) {
       const declarationPath = moduleName.replace(/\.(?:mjs|cjs|js)$/, ext);
-      filesQueue.push(
-        relative(sourceDir, resolve(dirname(currentFile), declarationPath)),
-      );
+      filesQueue.push(relative(sourceDir, resolve(dirname(currentFile), declarationPath)));
       return;
     }
 
@@ -77,10 +67,7 @@ export function findTypingsNames(
 
     function visit(node: ts.Node) {
       // import "moduleSpecifier";
-      if (
-        ts.isImportDeclaration(node) &&
-        ts.isStringLiteral(node.moduleSpecifier)
-      ) {
+      if (ts.isImportDeclaration(node) && ts.isStringLiteral(node.moduleSpecifier)) {
         processModuleSpecifier(node.moduleSpecifier, currentFile);
       }
 

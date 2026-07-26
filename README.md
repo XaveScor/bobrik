@@ -78,41 +78,41 @@ SmartBundle is guaranteed to work on all active and maintenance LTS releases, pl
 
 | Runtime | Version | Supported | E2E Tests |
 | ------- | ------- | :-------: | :-------: |
-| Node.js | ^18.0.0 |    ✔     |    ✔     |
-|         | ^20.0.0 |    ✔     |    ✔     |
-|         | ^22.0.0 |    ✔     |    ✔     |
-|         | ^24.0.0 |    ✔     |    ✔     |
-| Bun     | ^1.0.0  |    ✔     |    ✔     |
-| Deno    | ^2.0.0  |    ✔     |     -     |
+| Node.js | ^18.0.0 |     ✔     |     ✔     |
+|         | ^20.0.0 |     ✔     |     ✔     |
+|         | ^22.0.0 |     ✔     |     ✔     |
+|         | ^24.0.0 |     ✔     |     ✔     |
+| Bun     | ^1.0.0  |     ✔     |     ✔     |
+| Deno    | ^2.0.0  |     ✔     |     -     |
 
 ### Bundlers
 
 | Bundler           | Version | Supported | E2E Tests |
 | ----------------- | ------- | :-------: | :-------: |
-| Webpack           | ^4.47.0 |    ✔     |    ✔     |
-|                   | ^5.95.0 |    ✔     |    ✔     |
-| Rspack            | ^1.0.0  |    ✔     |    ✔     |
-| Vite              | ^5.0.0  |    ✔     |     -     |
-| Rollup            | ^4.0.0  |    ✔     |     -     |
-| Parcel            | ^2.0.0  |    ✔     |     -     |
-| Browserify        | ^17.0.0 |    ✔     |     -     |
-| Esbuild           | ^0.24.0 |    ✔     |     -     |
-| Metro             | ^0.81.0 |    ✔     |    ✔     |
-| Next.js/Turbopack | ^13.0.0 |    ✔     |     -     |
+| Webpack           | ^4.47.0 |     ✔     |     ✔     |
+|                   | ^5.95.0 |     ✔     |     ✔     |
+| Rspack            | ^1.0.0  |     ✔     |     ✔     |
+| Vite              | ^5.0.0  |     ✔     |     -     |
+| Rollup            | ^4.0.0  |     ✔     |     -     |
+| Parcel            | ^2.0.0  |     ✔     |     -     |
+| Browserify        | ^17.0.0 |     ✔     |     -     |
+| Esbuild           | ^0.24.0 |     ✔     |     -     |
+| Metro             | ^0.81.0 |     ✔     |     ✔     |
+| Next.js/Turbopack | ^13.0.0 |     ✔     |     -     |
 
 ### TypeScript Module Resolution
 
 | Built with | Consumed with | bundler | node10 | node16 ESM | node16 CommonJS |
 | ---------- | ------------- | :-----: | :----: | :--------: | :-------------: |
-| TS 5.9.3   | TS 5.9.3      |   ✔    |   ✔   |     ✔     |       ✔        |
-| TS 5.9.3   | TS 6.0.3      |   ✔    |   ✔   |     ✔     |       ✔        |
-| TS 5.9.3   | TS 7.0.2      |   ✔    |   -    |     ✔     |       ✔        |
-| TS 6.0.3   | TS 5.9.3      |   ✔    |   ✔   |     ✔     |       ✔        |
-| TS 6.0.3   | TS 6.0.3      |   ✔    |   ✔   |     ✔     |       ✔        |
-| TS 6.0.3   | TS 7.0.2      |   ✔    |   -    |     ✔     |       ✔        |
-| TS 7.0.2   | TS 5.9.3      |   ✔    |   ✔   |     ✔     |       ✔        |
-| TS 7.0.2   | TS 6.0.3      |   ✔    |   ✔   |     ✔     |       ✔        |
-| TS 7.0.2   | TS 7.0.2      |   ✔    |   -    |     ✔     |       ✔        |
+| TS 5.9.3   | TS 5.9.3      |    ✔    |   ✔    |     ✔      |        ✔        |
+| TS 5.9.3   | TS 6.0.3      |    ✔    |   ✔    |     ✔      |        ✔        |
+| TS 5.9.3   | TS 7.0.2      |    ✔    |   -    |     ✔      |        ✔        |
+| TS 6.0.3   | TS 5.9.3      |    ✔    |   ✔    |     ✔      |        ✔        |
+| TS 6.0.3   | TS 6.0.3      |    ✔    |   ✔    |     ✔      |        ✔        |
+| TS 6.0.3   | TS 7.0.2      |    ✔    |   -    |     ✔      |        ✔        |
+| TS 7.0.2   | TS 5.9.3      |    ✔    |   ✔    |     ✔      |        ✔        |
+| TS 7.0.2   | TS 6.0.3      |    ✔    |   ✔    |     ✔      |        ✔        |
+| TS 7.0.2   | TS 7.0.2      |    ✔    |   -    |     ✔      |        ✔        |
 
 Each supported combination builds the test package with the listed build version and then type-checks an isolated consumer with the listed consumer version. The matrix tests the latest release of each supported TypeScript major. TypeScript 7 builds use `@typescript/typescript6` for SmartBundle's compiler API. TypeScript 7 consumers do not support the removed `node10` resolution strategy.
 

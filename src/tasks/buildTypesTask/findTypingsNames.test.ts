@@ -9,9 +9,7 @@ import { findTypingsNames } from "./findTypingsNames.js";
 const { ts } = loadTypescriptApi(createRequire(import.meta.url));
 const detectedTs = { ts } as TS;
 
-test("finds packages through nested ESM declaration imports", async ({
-  tmpDir,
-}) => {
+test("finds packages through nested ESM declaration imports", async ({ tmpDir }) => {
   const nestedDir = join(tmpDir, "level1", "level2");
   await mkdir(nestedDir, { recursive: true });
   const entrypoint = join(tmpDir, "level1", "index.d.mts");

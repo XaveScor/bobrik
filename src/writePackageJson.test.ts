@@ -8,9 +8,7 @@ import { disableLog } from "./log.js";
 
 disableLog();
 
-test("writes conditions in order and falls back to ESM for default", async ({
-  tmpDir,
-}) => {
+test("writes conditions in order and falls back to ESM for default", async ({ tmpDir }) => {
   await writeFile(join(tmpDir, "index.js"), "export {};");
   await writeFile(
     join(tmpDir, "source-package.json"),
@@ -44,14 +42,7 @@ test("writes conditions in order and falls back to ESM for default", async ({
     binsMap: new Map(),
   });
 
-  const output = JSON.parse(
-    await readFile(join(tmpDir, "package.json"), "utf8"),
-  );
-  expect(Object.keys(output.exports["."])).toEqual([
-    "import",
-    "require",
-    "types",
-    "default",
-  ]);
+  const output = JSON.parse(await readFile(join(tmpDir, "package.json"), "utf8"));
+  expect(Object.keys(output.exports["."])).toEqual(["import", "require", "types", "default"]);
   expect(output.exports["./esm-only"].default).toBe("./esm-only.mjs");
 });

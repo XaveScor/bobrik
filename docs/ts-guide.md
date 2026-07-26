@@ -38,15 +38,15 @@ SmartBundle detects the actual TypeScript version installed in the project. For 
 
 | Built with | Consumed with | bundler | node10 | node16 ESM | node16 CommonJS |
 | ---------- | ------------- | :-----: | :----: | :--------: | :-------------: |
-| TS 5.9.3   | TS 5.9.3      |   ✔    |   ✔   |     ✔     |       ✔        |
-| TS 5.9.3   | TS 6.0.3      |   ✔    |   ✔   |     ✔     |       ✔        |
-| TS 5.9.3   | TS 7.0.2      |   ✔    |   -    |     ✔     |       ✔        |
-| TS 6.0.3   | TS 5.9.3      |   ✔    |   ✔   |     ✔     |       ✔        |
-| TS 6.0.3   | TS 6.0.3      |   ✔    |   ✔   |     ✔     |       ✔        |
-| TS 6.0.3   | TS 7.0.2      |   ✔    |   -    |     ✔     |       ✔        |
-| TS 7.0.2   | TS 5.9.3      |   ✔    |   ✔   |     ✔     |       ✔        |
-| TS 7.0.2   | TS 6.0.3      |   ✔    |   ✔   |     ✔     |       ✔        |
-| TS 7.0.2   | TS 7.0.2      |   ✔    |   -    |     ✔     |       ✔        |
+| TS 5.9.3   | TS 5.9.3      |    ✔    |   ✔    |     ✔      |        ✔        |
+| TS 5.9.3   | TS 6.0.3      |    ✔    |   ✔    |     ✔      |        ✔        |
+| TS 5.9.3   | TS 7.0.2      |    ✔    |   -    |     ✔      |        ✔        |
+| TS 6.0.3   | TS 5.9.3      |    ✔    |   ✔    |     ✔      |        ✔        |
+| TS 6.0.3   | TS 6.0.3      |    ✔    |   ✔    |     ✔      |        ✔        |
+| TS 6.0.3   | TS 7.0.2      |    ✔    |   -    |     ✔      |        ✔        |
+| TS 7.0.2   | TS 5.9.3      |    ✔    |   ✔    |     ✔      |        ✔        |
+| TS 7.0.2   | TS 6.0.3      |    ✔    |   ✔    |     ✔      |        ✔        |
+| TS 7.0.2   | TS 7.0.2      |    ✔    |   -    |     ✔      |        ✔        |
 
 Each supported combination is tested end to end: SmartBundle builds the library with the listed build version, then the listed consumer version type-checks an isolated project against the generated package. The matrix uses the latest release of each supported TypeScript major. TypeScript 7 consumers do not provide the removed `node10` resolution strategy.
 

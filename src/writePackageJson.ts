@@ -74,8 +74,7 @@ export async function writePackageJson(
 
   const bin = binsMap.size > 0 ? Object.fromEntries(binsMap) : undefined;
 
-  const rootExport =
-    typeof allExports["."] === "object" ? allExports["."] : undefined;
+  const rootExport = typeof allExports["."] === "object" ? allExports["."] : undefined;
   const res = {
     name: parsed.name,
     type: "commonjs",

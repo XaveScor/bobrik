@@ -275,11 +275,7 @@ describe("bugs", () => {
     }
   });
 
-  test("118-validate-dts-typings-imports", async ({
-    tmpDir,
-  }: {
-    tmpDir: string;
-  }) => {
+  test("118-validate-dts-typings-imports", async ({ tmpDir }: { tmpDir: string }) => {
     const res = await run({
       outputDir: tmpDir,
       sourceDir: "./src/fixtures/118-validate-dts-typings-imports",
@@ -303,20 +299,13 @@ describe("bugs", () => {
     expect(tmpDir).toMatchDirSnapshot();
   });
 
-  test("storybook internal types subpath import", async ({
-    tmpDir,
-  }: {
-    tmpDir: string;
-  }) => {
+  test("storybook internal types subpath import", async ({ tmpDir }: { tmpDir: string }) => {
     const res = await run({
       outputDir: tmpDir,
       sourceDir: "./src/fixtures/storybook-internal-types-subpath",
     });
 
-    expect(
-      res.error,
-      res.error ? String(res.errors[0]) : undefined,
-    ).toBeFalsy();
+    expect(res.error, res.error ? String(res.errors[0]) : undefined).toBeFalsy();
     expect(tmpDir).toMatchDirSnapshot();
   });
 

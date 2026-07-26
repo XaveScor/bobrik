@@ -26,10 +26,7 @@ type CopyEntry = {
 };
 
 function toRelativePath(sourceDir: string, filePath: string) {
-  return relative(sourceDir, resolve(sourceDir, filePath)).replaceAll(
-    "\\",
-    "/",
-  );
+  return relative(sourceDir, resolve(sourceDir, filePath)).replaceAll("\\", "/");
 }
 
 function isInsideSource(sourceDir: string, filePath: string) {
@@ -52,16 +49,11 @@ function canCopy(relativePath: string, outRelativePath: string | undefined) {
   }
   return (
     !outRelativePath ||
-    (relativePath !== outRelativePath &&
-      !relativePath.startsWith(`${outRelativePath}/`))
+    (relativePath !== outRelativePath && !relativePath.startsWith(`${outRelativePath}/`))
   );
 }
 
-async function expandPattern(
-  sourceDir: string,
-  realSourceDir: string,
-  pattern: string,
-) {
+async function expandPattern(sourceDir: string, realSourceDir: string, pattern: string) {
   const matches = await glob(pattern, {
     cwd: sourceDir,
     dot: true,
@@ -116,8 +108,7 @@ async function packageFiles(
 
 async function rootStaticFiles(sourceDir: string) {
   const files = new Set<string>();
-  const staticNames =
-    /^(readme(?:\..*)?|licen[cs]e(?:\..*)?|copying(?:\..*)?)$/i;
+  const staticNames = /^(readme(?:\..*)?|licen[cs]e(?:\..*)?|copying(?:\..*)?)$/i;
   for (const entry of await readdir(sourceDir, { withFileTypes: true })) {
     if (entry.isFile() && staticNames.test(entry.name)) files.add(entry.name);
   }
@@ -130,17 +121,11 @@ export async function createCopyManifest(
   rawExports: Map<string, string>,
 ) {
   const realSourceDir = await realpath(sourceDir);
-  const selected = await packageFiles(
-    sourceDir,
-    realSourceDir,
-    packageJson.files,
-  );
+  const selected = await packageFiles(sourceDir, realSourceDir, packageJson.files);
   for (const target of rawExports.values()) {
     const relativeTarget = toRelativePath(sourceDir, target);
     if (generatedRoots.has(relativeTarget.split("/")[0])) {
-      throw new BuildError(
-        `Raw export target conflicts with generated output: ${target}`,
-      );
+      throw new BuildError(`Raw export target conflicts with generated output: ${target}`);
     }
     selected.add(relativeTarget);
   }

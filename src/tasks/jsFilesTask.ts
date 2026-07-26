@@ -36,11 +36,7 @@ function findCompiledPath(
   );
 }
 
-export async function jsFilesTask({
-  buildOutput,
-  entrypoints,
-  outDir,
-}: JsFilesTaskOption) {
+export async function jsFilesTask({ buildOutput, entrypoints, outDir }: JsFilesTaskOption) {
   const res = new Map<string, string>();
   for (const [name, filePath] of entrypoints) {
     const totalName = join(outDir, name);

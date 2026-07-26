@@ -28,9 +28,7 @@ describe("run input errors", () => {
     if (result.error) {
       expect(result.errors[0]).toContain(expectedError);
     }
-    expect(await readFile(join(outputDir, "sentinel.txt"), "utf8")).toBe(
-      "keep",
-    );
+    expect(await readFile(join(outputDir, "sentinel.txt"), "utf8")).toBe("keep");
   }
 
   test("preserves existing output for a missing package.json", ({ tmpDir }) =>
@@ -50,8 +48,6 @@ describe("run input errors", () => {
     const result = await run({ sourceDir, outputDir });
 
     expect(result.error).toBe(true);
-    expect(await readFile(join(outputDir, "sentinel.txt"), "utf8")).toBe(
-      "keep",
-    );
+    expect(await readFile(join(outputDir, "sentinel.txt"), "utf8")).toBe("keep");
   });
 });

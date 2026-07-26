@@ -64,9 +64,7 @@ function isInside(baseDir: string, filePath: string) {
 }
 
 function dependencies(errorText: string) {
-  return z
-    .record(z.string(), z.string({ error: errorText }), { error: errorText })
-    .optional();
+  return z.record(z.string(), z.string({ error: errorText }), { error: errorText }).optional();
 }
 
 function createPathValidator(sourceDir: string, requirePackagePath = false) {
@@ -93,12 +91,7 @@ function createPathValidator(sourceDir: string, requirePackagePath = false) {
 }
 
 function isPackagePath(path: string) {
-  if (
-    !path.startsWith("./") ||
-    path.includes("\\") ||
-    path.includes("%") ||
-    path.includes("*")
-  ) {
+  if (!path.startsWith("./") || path.includes("\\") || path.includes("%") || path.includes("*")) {
     return false;
   }
 
@@ -138,9 +131,7 @@ function createPackageJsonSchema(sourceDir: string) {
       .union(
         [
           z.string().transform((path) => new Map([[".", path]])),
-          z
-            .record(z.string(), z.string())
-            .transform((obj) => new Map(Object.entries(obj))),
+          z.record(z.string(), z.string()).transform((obj) => new Map(Object.entries(obj))),
         ],
         {
           error() {
@@ -149,8 +140,7 @@ function createPackageJsonSchema(sourceDir: string) {
         },
       )
       .refine(
-        (obj) =>
-          [...obj.values()].every((value) => !isUnsupportedCodeExport(value)),
+        (obj) => [...obj.values()].every((value) => !isUnsupportedCodeExport(value)),
         errors.exportsUnsupportedExtension,
       )
       .refine(async (obj) => {
@@ -182,12 +172,8 @@ function createPackageJsonSchema(sourceDir: string) {
     bin: z
       .union(
         [
-          z
-            .string()
-            .transform((value) => new Map([[PackageJsonNameField, value]])),
-          z
-            .record(z.string(), z.string())
-            .transform((record) => new Map(Object.entries(record))),
+          z.string().transform((value) => new Map([[PackageJsonNameField, value]])),
+          z.record(z.string(), z.string()).transform((record) => new Map(Object.entries(record))),
         ],
         {
           error() {
@@ -222,9 +208,7 @@ function createPackageJsonSchema(sourceDir: string) {
     license: z.any().optional(),
     devDependencies: dependencies(errors.devDependenciesInvalid),
     peerDependencies: dependencies(errors.peerDependenciesInvalid),
-    engines: z
-      .record(z.string(), z.string(), { error: errors.enginesInvalid })
-      .optional(),
+    engines: z.record(z.string(), z.string(), { error: errors.enginesInvalid }).optional(),
     browser: z
       .union([
         z.string({ error: errors.browserInvalid }),

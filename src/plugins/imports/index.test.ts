@@ -35,21 +35,17 @@ describe("importsPlugin", () => {
         },
       };
 
-      await expect(
-        hook("resolveId").call(context, id, undefined),
-      ).rejects.toBeInstanceOf(ImportError);
+      await expect(hook("resolveId").call(context, id, undefined)).rejects.toBeInstanceOf(
+        ImportError,
+      );
     },
   );
 
   test("does not match a package-name prefix", async () => {
-    expect(await hook("resolveId").call({}, "optional-extra", undefined)).toBe(
-      null,
-    );
+    expect(await hook("resolveId").call({}, "optional-extra", undefined)).toBe(null);
   });
 
   test("externalizes dynamic optional imports", () => {
-    expect(hook("resolveDynamicImport").call({}, "optional/subpath")).toBe(
-      false,
-    );
+    expect(hook("resolveDynamicImport").call({}, "optional/subpath")).toBe(false);
   });
 });

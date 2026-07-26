@@ -9,11 +9,7 @@ import { tmpdir } from "node:os";
 disableLog();
 describe("parse package.json", () => {
   test("correct", async () => {
-    const sourceDir = join(
-      import.meta.dirname,
-      "fixtures",
-      "correct-package-json",
-    );
+    const sourceDir = join(import.meta.dirname, "fixtures", "correct-package-json");
     const packagePath = join(sourceDir, "package.json");
 
     const packageJson = await parsePackageJson({
@@ -25,11 +21,7 @@ describe("parse package.json", () => {
 
   describe("exports", () => {
     test("is optional", async () => {
-      const sourceDir = join(
-        import.meta.dirname,
-        "fixtures",
-        "empty-package-json",
-      );
+      const sourceDir = join(import.meta.dirname, "fixtures", "empty-package-json");
       const packagePath = join(sourceDir, "empty.json");
 
       const packageJson = await parsePackageJson({ sourceDir, packagePath });
@@ -38,11 +30,7 @@ describe("parse package.json", () => {
     });
 
     test("should valid type", async () => {
-      const sourceDir = join(
-        import.meta.dirname,
-        "fixtures",
-        "incorrect-exports",
-      );
+      const sourceDir = join(import.meta.dirname, "fixtures", "incorrect-exports");
       const packagePath = join(sourceDir, "invalid-exports-type.json");
 
       const packageJson = await parsePackageJson({ sourceDir, packagePath });
@@ -51,11 +39,7 @@ describe("parse package.json", () => {
     });
 
     test("can be an object", async () => {
-      const sourceDir = join(
-        import.meta.dirname,
-        "fixtures",
-        "incorrect-exports",
-      );
+      const sourceDir = join(import.meta.dirname, "fixtures", "incorrect-exports");
       const packagePath = join(sourceDir, "file-in-object-not-exists.json");
 
       const packageJson = await parsePackageJson({ sourceDir, packagePath });
@@ -64,11 +48,7 @@ describe("parse package.json", () => {
     });
 
     test("can be a path", async () => {
-      const sourceDir = join(
-        import.meta.dirname,
-        "fixtures",
-        "incorrect-exports",
-      );
+      const sourceDir = join(import.meta.dirname, "fixtures", "incorrect-exports");
       const packagePath = join(sourceDir, "file-not-exists.json");
 
       const packageJson = await parsePackageJson({ sourceDir, packagePath });
@@ -86,12 +66,7 @@ describe("parse package.json", () => {
 
     expect(packageJson).not.toStrictEqual(expect.any(Array));
     if (!Array.isArray(packageJson)) {
-      expect(packageJson.files).toEqual([
-        "docs",
-        "assets/**",
-        "!assets/private.txt",
-        ".hidden",
-      ]);
+      expect(packageJson.files).toEqual(["docs", "assets/**", "!assets/private.txt", ".hidden"]);
     }
   });
 
@@ -188,42 +163,35 @@ describe("parse package.json", () => {
     }
   });
 
-  test.each(["cjs", "mts", "cts"])(
-    "rejects unsupported .%s code exports",
-    async (extension) => {
-      const sourceDir = await mkdtemp(join(tmpdir(), "smartbundle-extension-"));
-      try {
-        const entrypoint = `./index.${extension}`;
-        await writeFile(join(sourceDir, `index.${extension}`), "export {};");
-        await writeFile(
-          join(sourceDir, "package.json"),
-          JSON.stringify({
-            name: "unsupported-extension",
-            version: "1.0.0",
-            private: true,
-            exports: entrypoint,
-          }),
-        );
+  test.each(["cjs", "mts", "cts"])("rejects unsupported .%s code exports", async (extension) => {
+    const sourceDir = await mkdtemp(join(tmpdir(), "smartbundle-extension-"));
+    try {
+      const entrypoint = `./index.${extension}`;
+      await writeFile(join(sourceDir, `index.${extension}`), "export {};");
+      await writeFile(
+        join(sourceDir, "package.json"),
+        JSON.stringify({
+          name: "unsupported-extension",
+          version: "1.0.0",
+          private: true,
+          exports: entrypoint,
+        }),
+      );
 
-        const packageJson = await parsePackageJson({
-          sourceDir,
-          packagePath: join(sourceDir, "package.json"),
-        });
+      const packageJson = await parsePackageJson({
+        sourceDir,
+        packagePath: join(sourceDir, "package.json"),
+      });
 
-        expect(packageJson).toContain(errors.exportsUnsupportedExtension);
-      } finally {
-        await rm(sourceDir, { recursive: true, force: true });
-      }
-    },
-  );
+      expect(packageJson).toContain(errors.exportsUnsupportedExtension);
+    } finally {
+      await rm(sourceDir, { recursive: true, force: true });
+    }
+  });
 
   describe("name", () => {
     test("is required", async () => {
-      const sourceDir = join(
-        import.meta.dirname,
-        "fixtures",
-        "empty-package-json",
-      );
+      const sourceDir = join(import.meta.dirname, "fixtures", "empty-package-json");
       const packagePath = join(sourceDir, "empty.json");
 
       const packageJson = await parsePackageJson({ sourceDir, packagePath });
@@ -282,11 +250,7 @@ describe("parse package.json", () => {
 
   describe("version", () => {
     test("is required", async () => {
-      const sourceDir = join(
-        import.meta.dirname,
-        "fixtures",
-        "empty-package-json",
-      );
+      const sourceDir = join(import.meta.dirname, "fixtures", "empty-package-json");
       const packagePath = join(sourceDir, "empty.json");
 
       const packageJson = await parsePackageJson({ sourceDir, packagePath });
@@ -297,11 +261,7 @@ describe("parse package.json", () => {
 
   describe("private", () => {
     test("is required", async () => {
-      const sourceDir = join(
-        import.meta.dirname,
-        "fixtures",
-        "empty-package-json",
-      );
+      const sourceDir = join(import.meta.dirname, "fixtures", "empty-package-json");
       const packagePath = join(sourceDir, "empty.json");
 
       const packageJson = await parsePackageJson({ sourceDir, packagePath });
@@ -310,11 +270,7 @@ describe("parse package.json", () => {
     });
 
     test("is boolean", async () => {
-      const sourceDir = join(
-        import.meta.dirname,
-        "fixtures",
-        "incorrect-private",
-      );
+      const sourceDir = join(import.meta.dirname, "fixtures", "incorrect-private");
       const packagePath = join(sourceDir, "not-boolean.json");
 
       const packageJson = await parsePackageJson({ sourceDir, packagePath });
@@ -323,11 +279,7 @@ describe("parse package.json", () => {
     });
 
     test("is true", async () => {
-      const sourceDir = join(
-        import.meta.dirname,
-        "fixtures",
-        "incorrect-private",
-      );
+      const sourceDir = join(import.meta.dirname, "fixtures", "incorrect-private");
       const packagePath = join(sourceDir, "not-true.json");
 
       const packageJson = await parsePackageJson({ sourceDir, packagePath });
@@ -338,11 +290,7 @@ describe("parse package.json", () => {
 
   describe("description", () => {
     test("is string", async () => {
-      const sourceDir = join(
-        import.meta.dirname,
-        "fixtures",
-        "incorrect-description",
-      );
+      const sourceDir = join(import.meta.dirname, "fixtures", "incorrect-description");
       const packagePath = join(sourceDir, "not-string.json");
 
       const packageJson = await parsePackageJson({ sourceDir, packagePath });
@@ -353,11 +301,7 @@ describe("parse package.json", () => {
 
   describe("dependencies", () => {
     test("is object", async () => {
-      const sourceDir = join(
-        import.meta.dirname,
-        "fixtures",
-        "incorrect-dependencies",
-      );
+      const sourceDir = join(import.meta.dirname, "fixtures", "incorrect-dependencies");
       const packagePath = join(sourceDir, "not-object.json");
 
       const packageJson = await parsePackageJson({ sourceDir, packagePath });
@@ -366,11 +310,7 @@ describe("parse package.json", () => {
     });
 
     test("is optional", async () => {
-      const sourceDir = join(
-        import.meta.dirname,
-        "fixtures",
-        "empty-package-json",
-      );
+      const sourceDir = join(import.meta.dirname, "fixtures", "empty-package-json");
       const packagePath = join(sourceDir, "empty.json");
 
       const packageJson = await parsePackageJson({ sourceDir, packagePath });
@@ -378,11 +318,7 @@ describe("parse package.json", () => {
     });
 
     test("not Object<string, string>", async () => {
-      const sourceDir = join(
-        import.meta.dirname,
-        "fixtures",
-        "incorrect-dependencies",
-      );
+      const sourceDir = join(import.meta.dirname, "fixtures", "incorrect-dependencies");
       const packagePath = join(sourceDir, "not-str-str.json");
 
       const packageJson = await parsePackageJson({ sourceDir, packagePath });
@@ -402,11 +338,7 @@ describe("parse package.json", () => {
     });
 
     test("is optional", async () => {
-      const sourceDir = join(
-        import.meta.dirname,
-        "fixtures",
-        "empty-package-json",
-      );
+      const sourceDir = join(import.meta.dirname, "fixtures", "empty-package-json");
       const packagePath = join(sourceDir, "empty.json");
 
       const packageJson = await parsePackageJson({ sourceDir, packagePath });

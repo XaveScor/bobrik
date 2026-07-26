@@ -23,11 +23,7 @@ function run(command, args, cwd = projectRoot) {
 
 run(pnpm, ["build"]);
 const workspaceDir = resolve(projectRoot, "e2e/vitest");
-run(
-  pnpm,
-  ["install", "--frozen-lockfile", "--strict-peer-dependencies"],
-  workspaceDir,
-);
+run(pnpm, ["install", "--frozen-lockfile", "--strict-peer-dependencies"], workspaceDir);
 
 for (const [version, projectName] of projects) {
   console.log(`\nTesting Vitest ${version}`);

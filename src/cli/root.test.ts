@@ -40,19 +40,16 @@ describe("runCli", () => {
     expect(cli.runSkill).not.toHaveBeenCalled();
   });
 
-  test.each([["--help"], ["-h"]])(
-    "shows only root help for %j",
-    async (...argv) => {
-      const cli = setup();
+  test.each([["--help"], ["-h"]])("shows only root help for %j", async (...argv) => {
+    const cli = setup();
 
-      expect(await cli.execute(argv)).toBe(0);
-      expect(cli.stdout()).toMatch(/^smartbundle \[command\]/);
-      expect(cli.stdout()).not.toContain("No build was performed");
-      expect(cli.stdout()).not.toContain("--sourceDir");
-      expect(cli.stdout()).toContain("smartbundle skill` for machine-readable");
-      expect(cli.stderr()).toBe("");
-    },
-  );
+    expect(await cli.execute(argv)).toBe(0);
+    expect(cli.stdout()).toMatch(/^smartbundle \[command\]/);
+    expect(cli.stdout()).not.toContain("No build was performed");
+    expect(cli.stdout()).not.toContain("--sourceDir");
+    expect(cli.stdout()).toContain("smartbundle skill` for machine-readable");
+    expect(cli.stderr()).toBe("");
+  });
 
   test("routes commands to their handlers", async () => {
     const buildCli = setup();
@@ -74,9 +71,7 @@ describe("runCli", () => {
       expect(await cli.execute(argv)).toBe(1);
       expect(cli.stdout()).toBe("");
       expect(cli.stderr()).toContain("smartbundle [command]");
-      expect(
-        cli.stderr().match(/Unknown (?:command|argument): unknown/g),
-      ).toHaveLength(1);
+      expect(cli.stderr().match(/Unknown (?:command|argument): unknown/g)).toHaveLength(1);
       expect(cli.runBuild).not.toHaveBeenCalled();
       expect(cli.runSkill).not.toHaveBeenCalled();
     },
@@ -87,49 +82,39 @@ describe("runCli", () => {
     ["build", "-h"],
     ["skill", "--help"],
     ["skill", "-h"],
-  ])(
-    "shows contextual help without running a handler for %j %j",
-    async (...argv) => {
-      const cli = setup();
+  ])("shows contextual help without running a handler for %j %j", async (...argv) => {
+    const cli = setup();
 
-      expect(await cli.execute(argv)).toBe(0);
-      expect(cli.stdout()).toMatch(
-        argv[0] === "build"
-          ? /^smartbundle build \[options\]/
-          : /^smartbundle skill/,
-      );
-      expect(cli.stdout()).toContain("smartbundle skill` for machine-readable");
-      if (argv[0] === "build") {
-        expect(cli.stdout()).toContain("--sourceDir");
-        expect(cli.stdout()).not.toContain("Commands:");
-      } else {
-        expect(cli.stdout()).not.toContain("--sourceDir");
-      }
-      expect(cli.runBuild).not.toHaveBeenCalled();
-      expect(cli.runSkill).not.toHaveBeenCalled();
-    },
-  );
+    expect(await cli.execute(argv)).toBe(0);
+    expect(cli.stdout()).toMatch(
+      argv[0] === "build" ? /^smartbundle build \[options\]/ : /^smartbundle skill/,
+    );
+    expect(cli.stdout()).toContain("smartbundle skill` for machine-readable");
+    if (argv[0] === "build") {
+      expect(cli.stdout()).toContain("--sourceDir");
+      expect(cli.stdout()).not.toContain("Commands:");
+    } else {
+      expect(cli.stdout()).not.toContain("--sourceDir");
+    }
+    expect(cli.runBuild).not.toHaveBeenCalled();
+    expect(cli.runSkill).not.toHaveBeenCalled();
+  });
 
   test.each([
     ["build", "--unknown"],
     ["build", "extra"],
     ["skill", "--unknown"],
     ["skill", "extra"],
-  ])(
-    "rejects options and positionals in their command context: %j %j",
-    async (...argv) => {
-      const cli = setup();
+  ])("rejects options and positionals in their command context: %j %j", async (...argv) => {
+    const cli = setup();
 
-      expect(await cli.execute(argv)).toBe(1);
-      expect(cli.stdout()).toBe("");
-      expect(cli.stderr()).toMatch(new RegExp(`^smartbundle ${argv[0]}`));
-      expect(cli.stderr().match(/Unknown (?:command|argument):/g)).toHaveLength(
-        1,
-      );
-      expect(cli.runBuild).not.toHaveBeenCalled();
-      expect(cli.runSkill).not.toHaveBeenCalled();
-    },
-  );
+    expect(await cli.execute(argv)).toBe(1);
+    expect(cli.stdout()).toBe("");
+    expect(cli.stderr()).toMatch(new RegExp(`^smartbundle ${argv[0]}`));
+    expect(cli.stderr().match(/Unknown (?:command|argument):/g)).toHaveLength(1);
+    expect(cli.runBuild).not.toHaveBeenCalled();
+    expect(cli.runSkill).not.toHaveBeenCalled();
+  });
 
   test("returns handler status and prints unexpected errors once", async () => {
     const failed = setup();

@@ -1,9 +1,5 @@
 import { describe, test, expect } from "vitest";
-import {
-  type FileExists,
-  inlineExtensionsCjs,
-  inlineExtensionsMjs,
-} from "./inlineExtensions.js";
+import { type FileExists, inlineExtensionsCjs, inlineExtensionsMjs } from "./inlineExtensions.js";
 import { loadTypescriptApi } from "../../detectModules.js";
 import { createRequire } from "node:module";
 

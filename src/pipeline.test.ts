@@ -28,10 +28,7 @@ describe("runSettled", () => {
 
   test("continues sequential execution after a rejection", async () => {
     const error = new Error("failed");
-    const results = await runSettled({ seq: true }, [
-      () => Promise.reject(error),
-      () => "ok",
-    ]);
+    const results = await runSettled({ seq: true }, [() => Promise.reject(error), () => "ok"]);
 
     expect(results).toEqual([
       { status: "rejected", reason: error },

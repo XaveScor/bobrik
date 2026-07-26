@@ -13,7 +13,5 @@ test("fails when an entrypoint output chunk is missing", async ({ tmpDir }) => {
       entrypoints: new Map([[".", entrypoint]]),
       outDir: tmpDir,
     }),
-  ).rejects.toEqual(
-    new BuildError(`Cannot find the ESM output chunk for ${entrypoint}`),
-  );
+  ).rejects.toEqual(new BuildError(`Cannot find the ESM output chunk for ${entrypoint}`));
 });

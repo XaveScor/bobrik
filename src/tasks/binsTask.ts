@@ -12,12 +12,7 @@ type BinsTaskOption = {
   outDir: string;
 };
 
-export async function binsTask({
-  buildOutput,
-  bins,
-  outBinsDir,
-  outDir,
-}: BinsTaskOption) {
+export async function binsTask({ buildOutput, bins, outBinsDir, outDir }: BinsTaskOption) {
   if (bins.size === 0) {
     return new Map<string, string>();
   }
@@ -51,12 +46,8 @@ import("${totalPath}");
 
   if (res.size !== bins.size) {
     const builtNames = new Set(res.values());
-    const missingNames = [...bins.keys()].filter(
-      (name) => !builtNames.has(name),
-    );
-    throw new BuildError(
-      `Cannot find output chunks for bins: ${missingNames.join(", ")}`,
-    );
+    const missingNames = [...bins.keys()].filter((name) => !builtNames.has(name));
+    throw new BuildError(`Cannot find output chunks for bins: ${missingNames.join(", ")}`);
   }
 
   if (res.size) {

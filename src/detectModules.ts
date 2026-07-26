@@ -17,11 +17,7 @@ export type DetectedModules = {
   react?: "legacy" | "modern";
 };
 
-type DepType =
-  | "dependencies"
-  | "devDependencies"
-  | "peerDependencies"
-  | "optionalDependencies";
+type DepType = "dependencies" | "devDependencies" | "peerDependencies" | "optionalDependencies";
 export function getMinVersion(
   packageJson: PackageJson,
   depName: string,
@@ -69,9 +65,9 @@ export function loadTypescriptApi(requireModule: RequireModule): {
   ts: TypeScriptApi;
   installedVersion: string;
 } {
-  const { version: installedVersion } = requireModule(
-    "typescript/package.json",
-  ) as { version: string };
+  const { version: installedVersion } = requireModule("typescript/package.json") as {
+    version: string;
+  };
   const parsedVersion = semver.parse(installedVersion);
 
   if (!parsedVersion || parsedVersion.major < 5 || parsedVersion.major > 7) {
@@ -116,25 +112,18 @@ async function detectBabel(
   }
 }
 
-async function detectReact(
-  packageJson: PackageJson,
-): Promise<"legacy" | "modern" | undefined> {
+async function detectReact(packageJson: PackageJson): Promise<"legacy" | "modern" | undefined> {
   const reactVersion = getMinVersion(packageJson, "react", ["devDependencies"]);
   if (reactVersion) {
     const isLegacy = semver.lt(reactVersion, "17.0.0");
     const transform = isLegacy ? "legacy" : "modern";
-    okLog(
-      `react, min version: ${reactVersion.version}. Transform: ${transform}`,
-    );
+    okLog(`react, min version: ${reactVersion.version}. Transform: ${transform}`);
     return transform;
   }
   errorLog("react");
 }
 
-async function detectTypescript(
-  packageJson: PackageJson,
-  dirs: Dirs,
-): Promise<TS | undefined> {
+async function detectTypescript(packageJson: PackageJson, dirs: Dirs): Promise<TS | undefined> {
   const typescriptVersion = getMinVersion(packageJson, "typescript", []);
   if (!typescriptVersion) {
     errorLog("typescript");
@@ -158,8 +147,7 @@ async function detectTypescript(
     return;
   }
 
-  const apiVersion =
-    installedVersion === ts.version ? "" : ` (compiler API: ${ts.version})`;
+  const apiVersion = installedVersion === ts.version ? "" : ` (compiler API: ${ts.version})`;
   okLog("typescript, version:", installedVersion + apiVersion);
 
   const configFilePath = ts.findConfigFile(dirs.sourceDir, ts.sys.fileExists);
@@ -170,10 +158,7 @@ async function detectTypescript(
   }
   const configFile = ts.readConfigFile(configFilePath, ts.sys.readFile);
   if (configFile.error) {
-    const readableError = ts.flattenDiagnosticMessageText(
-      configFile.error.messageText,
-      "\n",
-    );
+    const readableError = ts.flattenDiagnosticMessageText(configFile.error.messageText, "\n");
     throw new Error(`Cannot read tsconfig.json file, error: ${readableError}`);
   }
   const parsedConfig = ts.parseJsonConfigFileContent(
@@ -211,10 +196,7 @@ async function detectTypescript(
 export async function detectModules(
   packageJson: PackageJson,
   dirs: Dirs,
-): Promise<
-  | { error: false; modules: DetectedModules }
-  | { error: true; errors: Array<string> }
-> {
+): Promise<{ error: false; modules: DetectedModules } | { error: true; errors: Array<string> }> {
   try {
     const result: DetectedModules = {};
     log("Detecting modules");

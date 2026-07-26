@@ -25,12 +25,7 @@ function mapToObject(map: Map<string, string>) {
   return obj;
 }
 
-export function createViteConfig({
-  dirs,
-  packageJson,
-  modules,
-  test,
-}: CreateViteConfigParam) {
+export function createViteConfig({ dirs, packageJson, modules, test }: CreateViteConfigParam) {
   const { sourceDir, outDir, esmOutDir, cjsOutDir } = dirs;
 
   const entrypoints = new Map<string, string>();

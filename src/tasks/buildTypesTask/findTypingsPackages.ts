@@ -15,16 +15,9 @@ function createVirtualHostFunctions(
   virtualSourceContent: string,
   originalHost: ts.CompilerHost,
 ): HostFunctions {
-  const getSourceFile: ts.CompilerHost["getSourceFile"] = (
-    fileName,
-    languageVersion,
-  ) => {
+  const getSourceFile: ts.CompilerHost["getSourceFile"] = (fileName, languageVersion) => {
     if (fileName === virtualFilePath) {
-      return ts.createSourceFile(
-        fileName,
-        virtualSourceContent,
-        languageVersion,
-      );
+      return ts.createSourceFile(fileName, virtualSourceContent, languageVersion);
     }
     return originalHost.getSourceFile(fileName, languageVersion);
   };
@@ -93,10 +86,7 @@ function createCompilerHostWithVirtualSource(
   };
 }
 
-function findPackageNameForResolvedFile(
-  resolvedFileName: string,
-  sourceDir: string,
-) {
+function findPackageNameForResolvedFile(resolvedFileName: string, sourceDir: string) {
   let currentDir = path.dirname(resolvedFileName);
   const sourcePackageJsonPath = path.join(sourceDir, "package.json");
 
@@ -108,9 +98,7 @@ function findPackageNameForResolvedFile(
       }
 
       try {
-        const packageJson = JSON.parse(
-          fs.readFileSync(packageJsonPath, "utf-8"),
-        );
+        const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf-8"));
         return typeof packageJson.name === "string" ? packageJson.name : null;
       } catch {
         return null;
@@ -125,13 +113,12 @@ function findPackageNameForResolvedFile(
   }
 }
 
-export function findTypingsPackages(
-  { ts }: TS,
-  packages: Set<string>,
-  sourceDir: string,
-) {
-  const { host, virtualFilePath, compilerOptions } =
-    createCompilerHostWithVirtualSource(ts, packages, sourceDir);
+export function findTypingsPackages({ ts }: TS, packages: Set<string>, sourceDir: string) {
+  const { host, virtualFilePath, compilerOptions } = createCompilerHostWithVirtualSource(
+    ts,
+    packages,
+    sourceDir,
+  );
 
   const program = ts.createProgram({
     rootNames: [virtualFilePath],
@@ -141,9 +128,7 @@ export function findTypingsPackages(
 
   const sourceFile = program.getSourceFile(virtualFilePath);
   if (!sourceFile) {
-    throw new Error(
-      "[getSourceFile] Impossible error inside findMissingTypings",
-    );
+    throw new Error("[getSourceFile] Impossible error inside findMissingTypings");
   }
 
   const missingTypings = new Set<string>();

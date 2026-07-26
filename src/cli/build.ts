@@ -4,8 +4,7 @@ import type { BuildArgs } from "../buildArgs.js";
 import { run } from "../index.js";
 import { PrettyError } from "../PrettyErrors.js";
 
-export const helpFooter =
-  "LLM agents: run `smartbundle skill` for machine-readable instructions.";
+export const helpFooter = "LLM agents: run `smartbundle skill` for machine-readable instructions.";
 
 type BuildCommandArgs = ArgumentsCamelCase<BuildArgs>;
 
@@ -43,9 +42,7 @@ export async function runBuildCommand(
   return 1;
 }
 
-export function createBuildCommand(
-  handler: (args: BuildCommandArgs) => void | Promise<void>,
-) {
+export function createBuildCommand(handler: (args: BuildCommandArgs) => void | Promise<void>) {
   return {
     command: "build",
     describe: "Build the package",
@@ -55,8 +52,7 @@ export function createBuildCommand(
         .option("sourceDir", {
           alias: "s",
           type: "string" as const,
-          describe:
-            "path to the project directory. Default: current working directory",
+          describe: "path to the project directory. Default: current working directory",
         })
         .option("packagePath", {
           alias: "p",

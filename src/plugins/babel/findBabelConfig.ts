@@ -18,10 +18,7 @@ const configFiles = [
 // We need to check the existance only for better error reporting
 // It helps if a user made the config but forgot to install babel/core
 
-export async function findBabelConfig(
-  dir: string,
-  packageJson: PackageJson,
-): Promise<boolean> {
+export async function findBabelConfig(dir: string, packageJson: PackageJson): Promise<boolean> {
   try {
     for (const file of configFiles) {
       const configPath = path.join(dir, file);

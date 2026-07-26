@@ -3,8 +3,7 @@ import { createBuildCommand, helpFooter, runBuildCommand } from "./build.js";
 import { formatUnexpectedError } from "./errors.js";
 import { createSkillCommand, runSkillCommand } from "./skill.js";
 
-const noBuildMessage =
-  "No build was performed. Run `smartbundle build` to build the package.";
+const noBuildMessage = "No build was performed. Run `smartbundle build` to build the package.";
 
 export type CliDependencies = {
   runBuild?: typeof runBuildCommand;
@@ -17,15 +16,10 @@ function writeLine(write: (text: string) => void, text: string) {
   write(text.endsWith("\n") ? text : `${text}\n`);
 }
 
-export async function runCli(
-  argv: readonly string[],
-  dependencies: CliDependencies = {},
-) {
+export async function runCli(argv: readonly string[], dependencies: CliDependencies = {}) {
   const parseArgv = argv[0] === "--help" || argv[0] === "-h" ? [argv[0]] : argv;
-  const writeOutput =
-    dependencies.writeOutput ?? ((text: string) => process.stdout.write(text));
-  const writeError =
-    dependencies.writeError ?? ((text: string) => process.stderr.write(text));
+  const writeOutput = dependencies.writeOutput ?? ((text: string) => process.stdout.write(text));
+  const writeError = dependencies.writeError ?? ((text: string) => process.stderr.write(text));
   let exitCode = 0;
   let selectedCommand = false;
   let parserError: Error | undefined;

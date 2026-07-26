@@ -10,43 +10,29 @@ describe("skill command", () => {
     const expected = await readFile(resolve("skills/SKILL.md"), "utf8");
     let output = "";
 
-    expect(
-      await runSkillCommand({ writeOutput: (text) => (output += text) }),
-    ).toBe(0);
+    expect(await runSkillCommand({ writeOutput: (text) => (output += text) })).toBe(0);
     expect(output).toBe(expected);
   });
 
-  test("finds package root from source and compiled layouts", async ({
-    tmpDir,
-  }) => {
-    await writeFile(
-      join(tmpDir, "package.json"),
-      JSON.stringify({ name: "smartbundle" }),
-    );
+  test("finds package root from source and compiled layouts", async ({ tmpDir }) => {
+    await writeFile(join(tmpDir, "package.json"), JSON.stringify({ name: "smartbundle" }));
     const sourceModule = join(tmpDir, "src/cli/skill.js");
     const compiledModule = join(tmpDir, "__compiled__/esm/src/cli/skill.js");
     await mkdir(join(tmpDir, "src/cli"), { recursive: true });
     await mkdir(join(tmpDir, "__compiled__/esm/src/cli"), { recursive: true });
 
-    expect(await findPackageRoot(pathToFileURL(sourceModule).href)).toBe(
-      tmpDir,
-    );
-    expect(await findPackageRoot(pathToFileURL(compiledModule).href)).toBe(
-      tmpDir,
-    );
+    expect(await findPackageRoot(pathToFileURL(sourceModule).href)).toBe(tmpDir);
+    expect(await findPackageRoot(pathToFileURL(compiledModule).href)).toBe(tmpDir);
   });
 
   test("reports a missing skill asset clearly", async ({ tmpDir }) => {
-    await writeFile(
-      join(tmpDir, "package.json"),
-      JSON.stringify({ name: "smartbundle" }),
-    );
+    await writeFile(join(tmpDir, "package.json"), JSON.stringify({ name: "smartbundle" }));
     const modulePath = join(tmpDir, "src/cli/skill.js");
     await mkdir(join(tmpDir, "src/cli"), { recursive: true });
 
-    await expect(
-      runSkillCommand({ moduleUrl: pathToFileURL(modulePath).href }),
-    ).rejects.toThrow("Could not read SmartBundle skill");
+    await expect(runSkillCommand({ moduleUrl: pathToFileURL(modulePath).href })).rejects.toThrow(
+      "Could not read SmartBundle skill",
+    );
   });
 
   test("contains the decisions and toolchain rules, not a diagnostics catalog", async () => {

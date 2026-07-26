@@ -7,10 +7,7 @@ function isNodeModule(id: string) {
   return id.startsWith("node:");
 }
 
-export function importsPlugin(
-  packageJson: PackageJson,
-  test?: boolean,
-): Plugin {
+export function importsPlugin(packageJson: PackageJson, test?: boolean): Plugin {
   if (test) {
     return {
       name: "smartbundle:imports",

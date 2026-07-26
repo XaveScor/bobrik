@@ -12,11 +12,7 @@ type BabelPluginOptions = {
   modules: DetectedModules;
 };
 
-export function babelPlugin({
-  packageJson,
-  dirs,
-  modules,
-}: BabelPluginOptions): Plugin {
+export function babelPlugin({ packageJson, dirs, modules }: BabelPluginOptions): Plugin {
   let hasBabelConfig = false;
 
   return {

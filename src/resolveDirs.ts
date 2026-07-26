@@ -11,10 +11,7 @@ function myResolve(path1: string, path2: string) {
 
 export function resolveDirs(args: BuildArgs) {
   const sourceDir = myResolve(process.cwd(), args.sourceDir ?? ".");
-  const packagePath = myResolve(
-    sourceDir,
-    args.packagePath ?? "./package.json",
-  );
+  const packagePath = myResolve(sourceDir, args.packagePath ?? "./package.json");
   const outDir = myResolve(process.cwd(), args.outputDir ?? "./dist");
   const esmOutDir = myResolve(outDir, "__compiled__/esm");
   const cjsOutDir = myResolve(outDir, "__compiled__/cjs");

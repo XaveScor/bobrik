@@ -120,10 +120,7 @@ Node's filesystem APIs do not resolve package exports themselves. Resolve the pu
 ```js
 import { readFile } from "node:fs/promises";
 
-const skill = await readFile(
-  new URL(import.meta.resolve("my-package/skill")),
-  "utf8",
-);
+const skill = await readFile(new URL(import.meta.resolve("my-package/skill")), "utf8");
 ```
 
 Importing a raw file as a module, for example `import "my-package/skill"`, still fails for extensions such as `.md`. Use `import.meta.resolve()` in ESM or `require.resolve()` in CommonJS and pass the result to `fs`.

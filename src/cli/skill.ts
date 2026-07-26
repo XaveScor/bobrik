@@ -6,17 +6,14 @@ import { helpFooter } from "./build.js";
 
 type ReadFile = typeof readFile;
 
-export async function findPackageRoot(
-  moduleUrl: string,
-  read: ReadFile = readFile,
-) {
+export async function findPackageRoot(moduleUrl: string, read: ReadFile = readFile) {
   let directory = dirname(fileURLToPath(moduleUrl));
 
   while (true) {
     try {
-      const packageJson = JSON.parse(
-        await read(join(directory, "package.json"), "utf8"),
-      ) as { name?: string };
+      const packageJson = JSON.parse(await read(join(directory, "package.json"), "utf8")) as {
+        name?: string;
+      };
       if (packageJson.name === "smartbundle") {
         return directory;
       }
@@ -38,14 +35,9 @@ export type SkillCommandDependencies = {
   writeOutput?: (text: string) => void;
 };
 
-export async function runSkillCommand(
-  dependencies: SkillCommandDependencies = {},
-) {
+export async function runSkillCommand(dependencies: SkillCommandDependencies = {}) {
   const read = dependencies.readFile ?? readFile;
-  const root = await findPackageRoot(
-    dependencies.moduleUrl ?? import.meta.url,
-    read,
-  );
+  const root = await findPackageRoot(dependencies.moduleUrl ?? import.meta.url, read);
   const skillPath = join(root, "skills/SKILL.md");
 
   let content: string;

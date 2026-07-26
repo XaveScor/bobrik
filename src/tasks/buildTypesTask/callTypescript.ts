@@ -1,9 +1,6 @@
 import * as path from "node:path";
 import * as fs from "node:fs";
-import {
-  inlineExtensionsMjs,
-  inlineExtensionsCjs,
-} from "./inlineExtensions.js";
+import { inlineExtensionsMjs, inlineExtensionsCjs } from "./inlineExtensions.js";
 import { type PackageJson } from "../../packageJson.js";
 import { getMinVersion, type TS } from "../../detectModules.js";
 import { BuildError } from "../../error.js";
@@ -26,22 +23,13 @@ function makeFileExists(outDir: string, filePath: string) {
   };
 }
 
-export async function callTypescript({
-  ts,
-  dirs,
-  tsEntrypoints,
-  packageJson,
-}: BuildTypesOptions) {
+export async function callTypescript({ ts, dirs, tsEntrypoints, packageJson }: BuildTypesOptions) {
   const { sourceDir, outDir, esmOutDir, cjsOutDir } = dirs;
 
   // <build d.ts>
   const sourceToCjsDtsMap = new Map<string, string>();
   const sourceToEsmDtsMap = new Map<string, string>();
-  const program = ts.ts.createProgram(
-    tsEntrypoints,
-    ts.parsedConfig.options,
-    ts.host,
-  );
+  const program = ts.ts.createProgram(tsEntrypoints, ts.parsedConfig.options, ts.host);
   const emitResult = program.emit(undefined, (fileName, data) => {
     // .d.ts for cjs because "type": "commonjs" in package.json
     // .d.mts for esm
@@ -66,17 +54,13 @@ export async function callTypescript({
     sourceToCjsDtsMap.set(sourceFileNameTS, cjsFinalPath);
     sourceToCjsDtsMap.set(sourceFileNameTSX, cjsFinalPath);
   });
-  const diagnostics = [
-    ...ts.ts.getPreEmitDiagnostics(program),
-    ...emitResult.diagnostics,
-  ];
+  const diagnostics = [...ts.ts.getPreEmitDiagnostics(program), ...emitResult.diagnostics];
   if (emitResult.emitSkipped) {
-    const diagnosticHost: import("@typescript/typescript6").FormatDiagnosticsHost =
-      {
-        getCanonicalFileName: (fileName) => fileName,
-        getCurrentDirectory: () => sourceDir,
-        getNewLine: () => ts.ts.sys.newLine,
-      };
+    const diagnosticHost: import("@typescript/typescript6").FormatDiagnosticsHost = {
+      getCanonicalFileName: (fileName) => fileName,
+      getCurrentDirectory: () => sourceDir,
+      getNewLine: () => ts.ts.sys.newLine,
+    };
     throw new BuildError(
       `TypeScript declaration emit failed:\n${ts.ts.formatDiagnostics(
         diagnostics,
@@ -87,10 +71,7 @@ export async function callTypescript({
   // </build d.ts>
 
   // <fix vscode typings>
-  for (const file of [
-    ...sourceToCjsDtsMap.values(),
-    ...sourceToEsmDtsMap.values(),
-  ]) {
+  for (const file of [...sourceToCjsDtsMap.values(), ...sourceToEsmDtsMap.values()]) {
     const content = fs.readFileSync(file, "utf-8");
     const relativePath = path.relative(outDir, file);
     if (file.endsWith(".d.ts")) {
@@ -117,12 +98,7 @@ export async function callTypescript({
   for (const sourceEntrypoint of tsEntrypoints) {
     const esmEntrypoint = sourceToEsmDtsMap.get(sourceEntrypoint);
     if (esmEntrypoint) {
-      const localPackages = findTypingsNames(
-        ts,
-        esmEntrypoint,
-        esmOutDir,
-        ".d.mts",
-      );
+      const localPackages = findTypingsNames(ts, esmEntrypoint, esmOutDir, ".d.mts");
       for (const p of localPackages) {
         packages.add(p);
       }
@@ -130,12 +106,7 @@ export async function callTypescript({
 
     const cjsEntrypoint = sourceToCjsDtsMap.get(sourceEntrypoint);
     if (cjsEntrypoint) {
-      const localPackages = findTypingsNames(
-        ts,
-        cjsEntrypoint,
-        cjsOutDir,
-        ".d.ts",
-      );
+      const localPackages = findTypingsNames(ts, cjsEntrypoint, cjsOutDir, ".d.ts");
       for (const p of localPackages) {
         packages.add(p);
       }
@@ -144,18 +115,9 @@ export async function callTypescript({
   // </find all libraries names>
 
   // <check not installed typings libraries>
-  const { missingTypings, existingTypingPackages } = findTypingsPackages(
-    ts,
-    packages,
-    sourceDir,
-  );
+  const { missingTypings, existingTypingPackages } = findTypingsPackages(ts, packages, sourceDir);
   for (const lib of existingTypingPackages) {
-    if (
-      getMinVersion(packageJson, lib, [
-        "optionalDependencies",
-        "devDependencies",
-      ]) == null
-    ) {
+    if (getMinVersion(packageJson, lib, ["optionalDependencies", "devDependencies"]) == null) {
       missingTypings.add(lib);
     }
   }
