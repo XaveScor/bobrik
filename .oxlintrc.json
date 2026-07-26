@@ -1,0 +1,16 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["oxc", "typescript", "unicorn", "import"],
+  "categories": {
+    "correctness": "warn"
+  },
+  "ignorePatterns": [
+    "src/fixtures",
+    "src/__dir_snapshots__",
+    "e2e",
+    "sb-dist",
+    "scripts",
+    "dist",
+    "coverage"
+  ]
+}

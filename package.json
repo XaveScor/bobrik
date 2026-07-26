@@ -1,31 +1,22 @@
 {
   "name": "smartbundle",
-  "private": true,
   "version": "0.17.0",
+  "private": true,
   "description": "zero-config bundler for npm packages",
-  "bin": "./src/run.ts",
-  "type": "module",
-  "files": [
-    "skills/**/*.md"
-  ],
-  "scripts": {
-    "build": "bun src/run.ts build",
-    "test": "vitest src",
-    "test:coverage": "vitest run src --coverage",
-    "test:vitest-compat": "node scripts/test-vitest-compat.js",
-    "test:update-snapshots": "pnpm test -- -u",
-    "test:e2e": "vitest e2e",
-    "test:e2e-update-snapshots": "pnpm test:e2e -- -u"
-  },
   "keywords": [
-    "smartbundle",
     "bundler",
+    "cjs",
+    "esm",
     "npm",
     "package",
-    "typescript",
-    "esm",
-    "cjs"
+    "smartbundle",
+    "typescript"
   ],
+  "homepage": "https://github.com/xavescor/smartbundle",
+  "bugs": {
+    "url": "https://github.com/xavescor/smartbundle/issues"
+  },
+  "license": "MIT",
   "author": {
     "name": "Andrey Vassilyev",
     "email": "xavescor@xavescor.dev"
@@ -34,33 +25,24 @@
     "type": "git",
     "url": "https://github.com/xavescor/smartbundle"
   },
-  "homepage": "https://github.com/xavescor/smartbundle",
-  "bugs": {
-    "url": "https://github.com/xavescor/smartbundle/issues"
-  },
-  "license": "MIT",
-  "engines": {
-    "node": "^20.19.0 || >=22.12.0"
-  },
-  "devEngines": {
-    "packageManager": {
-      "name": "pnpm",
-      "version": "^11.5.2",
-      "onFail": "download"
-    }
-  },
-  "devDependencies": {
-    "@types/babel__core": "^7.20.5",
-    "@types/node": "^20.19.43",
-    "@types/semver": "^7.7.1",
-    "@types/yargs": "17.0.35",
-    "@typescript/typescript6": "^6.0.2",
-    "@vitest/coverage-v8": "^4.1.10",
-    "prettier": "^3.9.6",
-    "typescript": "7.0.2",
-    "vitest": "^4.1.10",
-    "vitest-directory-snapshot": "^0.7.1",
-    "zx": "^8.8.5"
+  "bin": "./src/run.ts",
+  "files": [
+    "skills/**/*.md"
+  ],
+  "type": "module",
+  "exports": "./src/index.ts",
+  "scripts": {
+    "build": "bun src/run.ts build",
+    "test": "vitest src",
+    "test:coverage": "vitest run src --coverage",
+    "test:vitest-compat": "node scripts/test-vitest-compat.js",
+    "test:update-snapshots": "pnpm test -- -u",
+    "test:e2e": "vitest e2e",
+    "test:e2e-update-snapshots": "pnpm test:e2e -- -u",
+    "fmt": "oxfmt",
+    "fmt:check": "oxfmt --check",
+    "lint": "oxlint",
+    "lint:check": "oxlint"
   },
   "dependencies": {
     "glob": "^13.0.6",
@@ -69,6 +51,20 @@
     "yargs": "^18.1.0",
     "youch": "4.1.1",
     "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/babel__core": "^7.20.5",
+    "@types/node": "^20.19.43",
+    "@types/semver": "^7.7.1",
+    "@types/yargs": "17.0.35",
+    "@typescript/typescript6": "^6.0.2",
+    "@vitest/coverage-v8": "^4.1.10",
+    "oxfmt": "^0.60.0",
+    "oxlint": "^1.75.0",
+    "typescript": "7.0.2",
+    "vitest": "^4.1.10",
+    "vitest-directory-snapshot": "^0.7.1",
+    "zx": "^8.8.5"
   },
   "peerDependencies": {
     "@babel/core": "^7.26.0",
@@ -90,5 +86,14 @@
       "optional": true
     }
   },
-  "exports": "./src/index.ts"
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "^11.5.2",
+      "onFail": "download"
+    }
+  },
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
+  }
 }

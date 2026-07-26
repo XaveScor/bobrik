@@ -1,0 +1,4 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "ignorePatterns": [".claude", "sb-dist", "src/__dir_snapshots__", "src/fixtures", "e2e"]
+}
