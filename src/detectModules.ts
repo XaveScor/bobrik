@@ -3,6 +3,7 @@ import semver from "semver";
 import { createRequire } from "node:module";
 import { okLog, errorLog, log, lineLog, warnLog } from "./log.js";
 import type { Dirs } from "./resolveDirs.js";
+import { resolveDep } from "./resolveDep.js";
 
 type TypeScriptApi = typeof import("@typescript/typescript6");
 
@@ -97,6 +98,7 @@ export function loadTypescriptApi(requireModule: RequireModule): {
 
 async function detectBabel(
   packageJson: PackageJson,
+  packagePath: string,
 ): Promise<typeof import("@babel/core") | undefined> {
   if ("@babel/core" in (packageJson.optionalDependencies ?? {})) {
     errorLog("babel excluded because inside optionalDependencies");
@@ -104,7 +106,7 @@ async function detectBabel(
   }
 
   try {
-    const babel = await import("@babel/core");
+    const babel = resolveDep<typeof import("@babel/core")>("@babel/core", packagePath);
     okLog("babel, version:", babel.version);
     return babel;
   } catch (e) {
@@ -202,7 +204,7 @@ export async function detectModules(
     log("Detecting modules");
 
     result.ts = await detectTypescript(packageJson, dirs);
-    result.babel = await detectBabel(packageJson);
+    result.babel = await detectBabel(packageJson, dirs.packagePath);
     result.react = await detectReact(packageJson);
 
     lineLog();
