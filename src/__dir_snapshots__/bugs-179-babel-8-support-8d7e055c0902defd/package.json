@@ -1,0 +1,28 @@
+{
+  "name": "179-babel-8-support",
+  "type": "commonjs",
+  "version": "0.0.0",
+  "types": "./__compiled__/cjs/entrypoint.d.ts",
+  "module": "./__compiled__/esm/entrypoint.mjs",
+  "main": "./__compiled__/cjs/entrypoint.js",
+  "description": "",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./__compiled__/esm/entrypoint.d.mts",
+        "default": "./__compiled__/esm/entrypoint.mjs"
+      },
+      "require": {
+        "types": "./__compiled__/cjs/entrypoint.d.ts",
+        "default": "./__compiled__/cjs/entrypoint.js"
+      },
+      "types": "./__compiled__/cjs/entrypoint.d.ts",
+      "default": "./__compiled__/cjs/entrypoint.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "devDependencies": {
+    "@babel/core": "^8.0.0",
+    "typescript": "^6.0.3"
+  }
+}

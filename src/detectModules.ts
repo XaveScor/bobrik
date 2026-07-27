@@ -107,8 +107,8 @@ async function detectBabel(
     const babel = await import("@babel/core");
     okLog("babel, version:", babel.version);
     return babel;
-  } catch {
-    errorLog("babel");
+  } catch (e) {
+    errorLog("babel:", e instanceof Error ? e.message : String(e));
   }
 }
 

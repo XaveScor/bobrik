@@ -1,0 +1,11 @@
+{
+  "exports": "./entrypoint.ts",
+  "name": "179-babel-8-support",
+  "version": "0.0.0",
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "@babel/core": "^8.0.0",
+    "typescript": "^6.0.3"
+  }
+}
