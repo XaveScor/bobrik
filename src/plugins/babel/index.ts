@@ -139,6 +139,8 @@ export function babelPlugin({ packageJson, dirs, modules }: BabelPluginOptions):
       try {
         result = await modules.babel.transformAsync(code, {
           filename: id,
+          cwd: dirs.sourceDir,
+          root: dirs.sourceDir,
           sourceMaps: true,
           inputSourceMap: map,
         });

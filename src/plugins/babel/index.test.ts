@@ -119,7 +119,11 @@ describe("babelPlugin", () => {
     expect(result).toEqual({ code: "export const a = 1;", map: null });
     expect(babel.transformAsync).toHaveBeenCalledWith(
       "export const a = 1;",
-      expect.objectContaining({ filename: "/proj/entry.ts" }),
+      expect.objectContaining({
+        filename: "/proj/entry.ts",
+        cwd: "/proj",
+        root: "/proj",
+      }),
     );
   });
 
