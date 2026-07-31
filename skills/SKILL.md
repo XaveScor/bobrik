@@ -26,6 +26,6 @@ SmartBundle validates the shape of these fields and whether their paths are allo
 ## Optional toolchain
 
 - TypeScript: install a local development dependency in the range `>=5.0.0 <8.0.0`. With TypeScript 7, also install `@typescript/typescript6`. Follow concrete build diagnostics for `tsconfig.json`; see `docs/ts-guide.md` when more context is needed.
-- Babel: only when the project has a Babel configuration, install `@babel/core@^7.26.0` as a development dependency. The project chooses its own configuration, presets, and plugins.
+- Babel: only when the project has a Babel configuration, install `@babel/core@^7.26.0 || ^8.0.0` as a development dependency. The project chooses its own configuration, presets, and plugins.
 - React: install `react` in `dependencies`, `optionalDependencies`, or `peerDependencies`, not only in `devDependencies`, because SmartBundle uses that version to select the classic or automatic JSX transform. For TypeScript projects, add `@types/react` as a development dependency when needed. See `docs/react.md` for details.
 - Vitest: install `vitest@^3.0.0` or `vitest@^4.0.0` as a development dependency. In `vitest.config.ts`, combine `await defineViteConfig()` from SmartBundle with the project's `defineConfig()` by using Vitest's `mergeConfig()`.

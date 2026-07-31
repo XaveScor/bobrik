@@ -261,6 +261,20 @@ describe("bugs", () => {
     expect(tmpDir).toMatchDirSnapshot();
   });
 
+  test("179-babel-8-support", async ({ tmpDir }: { tmpDir: string }) => {
+    const sourceDir = "./src/fixtures/179-babel-8-support";
+
+    $.sync`pnpm install --dir ${sourceDir}`;
+
+    const res = await run({
+      outputDir: tmpDir,
+      sourceDir,
+    });
+
+    expect(res.error).toBeFalsy();
+    expect(tmpDir).toMatchDirSnapshot();
+  });
+
   test("109-validate-dts-imports", async ({ tmpDir }: { tmpDir: string }) => {
     const res = await run({
       outputDir: tmpDir,

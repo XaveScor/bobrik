@@ -43,7 +43,7 @@ describe("skill command", () => {
     expect(skill).toContain("`files`");
     expect(skill).toContain("`bin`");
     expect(skill).toContain("@typescript/typescript6");
-    expect(skill).toContain("@babel/core@^7.26.0");
+    expect(skill).toContain("@babel/core@^7.26.0 || ^8.0.0");
     expect(skill).toContain("@types/react");
     expect(skill).toContain("mergeConfig()");
     expect(skill).not.toContain("Known errors");

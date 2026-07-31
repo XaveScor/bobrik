@@ -1,4 +1,4 @@
-//#region src/fixtures/4-babel-support/entrypoint.ts
+//#region src/fixtures/179-babel-8-support/entrypoint.ts
 var a = 2;
 //#endregion
 export { a };

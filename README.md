@@ -140,7 +140,7 @@ SmartBundle continues to use the project's TypeScript API directly on TypeScript
 
 ### Babel
 
-Add `@babel/core@^7.0.0` as a dev dependency and create a Babel configuration file in your project root. SmartBundle will automatically apply your transformations.
+Add `@babel/core@^7.26.0 || ^8.0.0` as a dev dependency and create a Babel configuration file in your project root. SmartBundle will automatically apply your transformations.
 
 ### React
 
